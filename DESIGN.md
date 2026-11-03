@@ -26,7 +26,7 @@ type GameState = {
 
 - **`history` is an immutable array.** `submitGuess` returns a new state with
   `[...state.history, entry]`. Old entries are the same object references, so they cannot change
-  and React-style "did it change" checks stay cheap. The history is ordered by time and only ever
+  and reference equality checks stay cheap. The history is ordered by time and only ever
   appended, so an array is the natural fit (a `Set` would lose order).
 - The state is a plain object, so every transition is `(state, input) => newState` and can be tested
   without a browser. Time is passed in as `now` instead of calling `Date.now()` inside.
