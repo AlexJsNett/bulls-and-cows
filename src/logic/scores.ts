@@ -5,25 +5,48 @@ export const STORAGE_KEY = "bulls-and-cows:scores";
 
 export type KeyValueStorage = Pick<Storage, "getItem" | "setItem">;
 
-export const compareScores = (_a: Score, _b: Score): number => {
-  throw new Error("not implemented");
-};
+export const compareScores = (a: Score, b: Score): number =>
+  a.attempts - b.attempts || a.timeMs - b.timeMs;
+
+const sameCombination = (a: Score, b: Score): boolean =>
+  a.length === b.length && a.base === b.base;
 
 export const addScore = (
-  _scores: readonly Score[],
-  _score: Score,
-  _limit: number = TOP_N,
+  scores: readonly Score[],
+  score: Score,
+  limit: number = TOP_N,
 ): readonly Score[] => {
-  throw new Error("not implemented");
+  const sorted = [...scores, score].sort(compareScores);
+  return sorted.filter(
+    (s, i) =>
+      sorted.slice(0, i).filter((o) => sameCombination(o, s)).length < limit,
+  );
 };
 
-export const loadScores = (_storage: KeyValueStorage): readonly Score[] => {
-  throw new Error("not implemented");
+const isScore = (value: unknown): value is Score => {
+  if (typeof value !== "object" || value === null) return false;
+  const v = value as Record<string, unknown>;
+  return (
+    typeof v.length === "number" &&
+    typeof v.base === "number" &&
+    typeof v.attempts === "number" &&
+    typeof v.timeMs === "number" &&
+    typeof v.playedAt === "number"
+  );
+};
+
+export const loadScores = (storage: KeyValueStorage): readonly Score[] => {
+  try {
+    const parsed: unknown = JSON.parse(storage.getItem(STORAGE_KEY) ?? "[]");
+    return Array.isArray(parsed) ? parsed.filter(isScore) : [];
+  } catch {
+    return [];
+  }
 };
 
 export const saveScores = (
-  _storage: KeyValueStorage,
-  _scores: readonly Score[],
+  storage: KeyValueStorage,
+  scores: readonly Score[],
 ): void => {
-  throw new Error("not implemented");
+  storage.setItem(STORAGE_KEY, JSON.stringify(scores));
 };
