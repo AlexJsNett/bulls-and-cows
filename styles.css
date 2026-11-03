@@ -1,0 +1,147 @@
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1c2030;
+  --muted: #6a7088;
+  --accent: #3b5bdb;
+  --border: #d9dcea;
+  --ok: #2b8a3e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+
+main {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+h1 {
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+select,
+input {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  min-width: 0;
+}
+
+input {
+  flex: 1;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+button {
+  font: inherit;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+.hint,
+.message {
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+
+.message {
+  min-height: 1.4em;
+  color: #c92a2a;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.result {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.history {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.history li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.guess {
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.15em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #e7ecff;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
