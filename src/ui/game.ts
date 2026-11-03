@@ -48,7 +48,7 @@ export const renderGame = (
   const history = el(
     "ol",
     { className: "history" },
-    ...state.history.map((attempt) =>
+    ...[...state.history].reverse().map((attempt) =>
       el(
         "li",
         {},
@@ -56,8 +56,14 @@ export const renderGame = (
           className: "guess",
           textContent: attempt.guess.toUpperCase(),
         }),
-        el("span", { textContent: `${attempt.bulls} bulls` }),
-        el("span", { textContent: `${attempt.cows} cows` }),
+        el("span", {
+          className: "chip bulls",
+          textContent: `${attempt.bulls} ${attempt.bulls === 1 ? "bull" : "bulls"}`,
+        }),
+        el("span", {
+          className: "chip cows",
+          textContent: `${attempt.cows} ${attempt.cows === 1 ? "cow" : "cows"}`,
+        }),
       ),
     ),
   );
@@ -81,7 +87,12 @@ export const renderGame = (
   const root = el(
     "section",
     { className: "game" },
-    el("p", {}, "Time: ", timer),
+    el(
+      "div",
+      { className: "status" },
+      el("span", {}, "Time ", timer),
+      el("span", { textContent: `Attempts ${state.history.length}` }),
+    ),
     controls,
     message,
     history,
