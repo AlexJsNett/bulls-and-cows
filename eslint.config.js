@@ -13,6 +13,10 @@ export default tseslint.config(
       "no-var": "error",
       "prefer-const": "error",
       "no-console": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
     },
   },
   {
