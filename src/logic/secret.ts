@@ -1,5 +1,5 @@
-import { ALPHABET } from "./digits";
-import type { Random } from "./types";
+import { ALPHABET } from "./digits.js";
+import type { Random } from "./types.js";
 
 type Draw = { readonly pool: readonly string[]; readonly picked: string };
 

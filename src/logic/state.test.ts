@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { availableLengths, createGame, elapsedMs, submitGuess } from "./state";
+import {
+  availableLengths,
+  createGame,
+  elapsedMs,
+  submitGuess,
+} from "./state.js";
 
 const game = () => createGame({ length: 4, base: 10 }, "0123", 1000);
 

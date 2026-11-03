@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { memoize } from "./memoize";
+import { memoize } from "./memoize.js";
 
 describe("memoize", () => {
   it("returns the same result as the original function", () => {

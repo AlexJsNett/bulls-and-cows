@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { evaluateGuess } from "./evaluate";
+import { evaluateGuess } from "./evaluate.js";
 
 describe("evaluateGuess", () => {
   it("returns 4 bulls for an exact match", () => {

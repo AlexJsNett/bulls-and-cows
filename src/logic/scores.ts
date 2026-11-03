@@ -1,4 +1,4 @@
-import type { Score } from "./types";
+import type { Score } from "./types.js";
 
 export const TOP_N = 10;
 export const STORAGE_KEY = "bulls-and-cows:scores";

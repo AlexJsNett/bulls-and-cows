@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createDigitValidator } from "./digits";
+import { createDigitValidator } from "./digits.js";
 
 describe("createDigitValidator", () => {
   it("accepts only 0 and 1 for base 2", () => {

@@ -6,8 +6,8 @@ import {
   loadScores,
   saveScores,
   type KeyValueStorage,
-} from "./scores";
-import type { Score } from "./types";
+} from "./scores.js";
+import type { Score } from "./types.js";
 
 const score = (
   attempts: number,

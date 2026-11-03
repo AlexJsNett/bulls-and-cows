@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateSecret } from "./secret";
+import { generateSecret } from "./secret.js";
 
 const sequence = (values: readonly number[]) => {
   let i = 0;

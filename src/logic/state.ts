@@ -1,6 +1,6 @@
-import { evaluateGuess } from "./evaluate";
-import { isValidGuess } from "./validation";
-import type { Base, GameState, Settings } from "./types";
+import { evaluateGuess } from "./evaluate.js";
+import { isValidGuess } from "./validation.js";
+import type { Base, GameState, Settings } from "./types.js";
 
 export const MIN_LENGTH = 2;
 export const MAX_LENGTH = 6;

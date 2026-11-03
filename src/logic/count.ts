@@ -1,4 +1,4 @@
-import { memoize } from "./memoize";
+import { memoize } from "./memoize.js";
 
 export const countPossibleSecrets: (length: number, base: number) => number =
   memoize((length: number, base: number): number => {
