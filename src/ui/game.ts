@@ -1,4 +1,4 @@
-import { createDigitValidator } from "../logic/digits.js";
+import { ALPHABET, createDigitValidator } from "../logic/digits.js";
 import { elapsedMs } from "../logic/state.js";
 import type { GameState } from "../logic/types.js";
 import { el } from "./dom.js";
@@ -45,28 +45,78 @@ export const renderGame = (
     if (event.key === "Enter") submit();
   });
 
+  const plural = (count: number, word: string) =>
+    `${count} ${word}${count === 1 ? "" : "s"}`;
+
   const history = el(
     "ol",
     { className: "history" },
-    ...[...state.history].reverse().map((attempt) =>
+    ...state.history.map((attempt, i) =>
       el(
         "li",
         {},
-        el("span", {
-          className: "guess",
-          textContent: attempt.guess.toUpperCase(),
-        }),
-        el("span", {
-          className: "chip bulls",
-          textContent: `${attempt.bulls} ${attempt.bulls === 1 ? "bull" : "bulls"}`,
-        }),
-        el("span", {
-          className: "chip cows",
-          textContent: `${attempt.cows} ${attempt.cows === 1 ? "cow" : "cows"}`,
-        }),
+        el("span", { className: "num", textContent: String(i + 1) }),
+        el(
+          "span",
+          { className: "tiles" },
+          ...[...attempt.guess].map((char) =>
+            el("span", {
+              className: "tile",
+              textContent: char.toUpperCase(),
+            }),
+          ),
+        ),
+        el(
+          "span",
+          { className: "clue" },
+          el("span", {
+            className: "clue-text",
+            textContent: `${plural(attempt.bulls, "bull")}, ${plural(attempt.cows, "cow")}`,
+          }),
+          el("span", {
+            className: "clue-icons",
+            ariaHidden: "true",
+            textContent:
+              "\u{1F402}".repeat(attempt.bulls) +
+              "\u{1F404}".repeat(attempt.cows),
+          }),
+        ),
       ),
     ),
   );
+
+  const keypad = el(
+    "div",
+    { className: "keypad" },
+    ...[...ALPHABET.slice(0, base)].filter(isDigit).map((digit) =>
+      el("button", {
+        type: "button",
+        className: "key",
+        textContent: digit.toUpperCase(),
+        onclick: () => {
+          if (input.value.length < length && !input.value.includes(digit)) {
+            input.value += digit;
+          }
+          input.focus();
+        },
+      }),
+    ),
+    el("button", {
+      type: "button",
+      className: "key key-wide",
+      textContent: "\u232B",
+      ariaLabel: "Delete",
+      onclick: () => {
+        input.value = input.value.slice(0, -1);
+        input.focus();
+      },
+    }),
+  );
+
+  const legend = el("p", {
+    className: "legend",
+    textContent: "\u{1F402} right place \u00B7 \u{1F404} wrong place",
+  });
 
   const controls = won
     ? el(
@@ -84,6 +134,9 @@ export const renderGame = (
         el("button", { textContent: "Guess", onclick: submit }),
       );
 
+  const top = won ? [controls] : [];
+  const entry = won ? [] : [history, controls, message, keypad];
+
   const root = el(
     "section",
     { className: "game" },
@@ -93,9 +146,9 @@ export const renderGame = (
       el("span", {}, "Time ", timer),
       el("span", { textContent: `Attempts ${state.history.length}` }),
     ),
-    controls,
-    message,
-    history,
+    legend,
+    ...top,
+    ...(won ? [history] : entry),
   );
 
   const tick = (now: number) => {
