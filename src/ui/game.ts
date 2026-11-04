@@ -1,4 +1,4 @@
-import { ALPHABET, createDigitValidator } from "../logic/digits.js";
+import { createDigitValidator } from "../logic/digits.js";
 import { elapsedMs } from "../logic/state.js";
 import type { GameState } from "../logic/types.js";
 import { el } from "./dom.js";
@@ -85,31 +85,42 @@ export const renderGame = (
     ),
   );
 
-  const keypad = el(
-    "div",
-    { className: "keypad" },
-    ...[...ALPHABET.slice(0, base)].filter(isDigit).map((digit) =>
-      el("button", {
-        type: "button",
-        className: "key",
-        textContent: digit.toUpperCase(),
-        onclick: () => {
-          if (input.value.length < length && !input.value.includes(digit)) {
-            input.value += digit;
-          }
-          input.focus();
-        },
-      }),
-    ),
+  const typeDigit = (digit: string) => {
+    if (input.value.length < length && !input.value.includes(digit)) {
+      input.value += digit;
+    }
+    input.focus();
+  };
+
+  const digitKey = (digit: string) =>
     el("button", {
       type: "button",
-      className: "key key-wide",
+      className: "key",
+      textContent: digit.toUpperCase(),
+      disabled: !isDigit(digit),
+      onclick: () => typeDigit(digit),
+    });
+
+  const keypad = el(
+    "div",
+    { className: base === 16 ? "keypad keypad-hex" : "keypad" },
+    ...[..."123456789", ...(base === 16 ? [..."abcdef"] : [])].map(digitKey),
+    el("button", {
+      type: "button",
+      className: "key key-muted",
       textContent: "\u232B",
       ariaLabel: "Delete",
       onclick: () => {
         input.value = input.value.slice(0, -1);
         input.focus();
       },
+    }),
+    digitKey("0"),
+    el("button", {
+      type: "button",
+      className: "key key-go",
+      textContent: "Guess",
+      onclick: submit,
     }),
   );
 
@@ -127,12 +138,7 @@ export const renderGame = (
         }),
         el("button", { textContent: "New game", onclick: handlers.onNewGame }),
       )
-    : el(
-        "div",
-        { className: "controls" },
-        input,
-        el("button", { textContent: "Guess", onclick: submit }),
-      );
+    : el("div", { className: "controls" }, input);
 
   const top = won ? [controls] : [];
   const entry = won ? [] : [history, controls, message, keypad];

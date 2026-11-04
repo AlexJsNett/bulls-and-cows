@@ -212,9 +212,11 @@ main > div > button {
 
 .keypad {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin-top: 12px;
+  max-width: 320px;
+  margin-inline: auto;
 }
 
 .key {
@@ -227,8 +229,24 @@ main > div > button {
   box-shadow: 0 2px 0 var(--border);
 }
 
-.key-wide {
-  grid-column: span 2;
+.key:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.key-muted {
+  background: var(--field);
+}
+
+.key-go {
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 18%);
 }
 
 .history {
@@ -319,10 +337,149 @@ th {
   font-size: 0.85rem;
 }
 
-@media (max-width: 380px) {
-  .field {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
-  }
+/* Fluid layout: the app fills one screen; content defines the minimum height */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.6dvh, 16px);
+  min-height: 100dvh;
+  padding: clamp(8px, 2dvh, 24px) 16px;
+}
+
+main > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: clamp(8px, 1.6dvh, 16px);
+}
+
+main > div > button {
+  margin-bottom: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.3rem, 4dvh, 1.9rem);
+}
+
+section {
+  margin-bottom: 0;
+  padding: clamp(10px, 2dvh, 18px);
+}
+
+.settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  flex: none;
+}
+
+.settings .field {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin-bottom: clamp(4px, 1dvh, 12px);
+}
+
+.settings select {
+  width: 100%;
+}
+
+.settings .hint {
+  grid-column: 1 / -1;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.history {
+  flex: 1 1 0;
+  min-height: 96px;
+  margin: 0 0 clamp(4px, 1dvh, 12px);
+  overflow-y: auto;
+  align-content: start;
+}
+
+.game > .result {
+  flex: none;
+  margin-bottom: 8px;
+}
+
+.keypad {
+  flex: none;
+  gap: clamp(6px, 1dvh, 8px);
+  width: 100%;
+}
+
+.key {
+  height: clamp(38px, 6.5dvh, 56px);
+  padding: 0;
+}
+
+.scores {
+  flex: 0 1 auto;
+  max-height: clamp(96px, 22dvh, 220px);
+  overflow-y: auto;
+}
+
+.scores table {
+  font-size: 0.9rem;
+}
+
+.settings.locked .hint {
+  display: none;
+}
+
+.message:empty {
+  display: none;
+}
+
+.status {
+  margin-bottom: 4px;
+}
+
+.legend {
+  margin-bottom: 8px;
+}
+
+.tile {
+  width: clamp(28px, 9vw, 36px);
+  height: clamp(32px, 5.5dvh, 40px);
+}
+
+.history li {
+  padding: 6px 10px;
+}
+
+.clue-text {
+  text-align: right;
+}
+
+input {
+  padding: 7px 12px;
+}
+
+.tiles {
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+
+.history li {
+  gap: 8px;
+}
+
+.keypad-hex {
+  grid-template-columns: repeat(6, 1fr);
+  max-width: 420px;
+}
+
+.keypad-hex .key {
+  font-size: 1.05rem;
+}
+
+.keypad-hex .key-go {
+  font-size: 0.8rem;
 }

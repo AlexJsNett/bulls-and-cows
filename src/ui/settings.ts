@@ -58,7 +58,7 @@ export const renderSettings = (
 
   return el(
     "section",
-    { className: "settings" },
+    { className: locked ? "settings locked" : "settings" },
     field("Base", baseSelect),
     field("Length", lengthSelect),
     el("p", {

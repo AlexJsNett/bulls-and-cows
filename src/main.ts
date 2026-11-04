@@ -104,7 +104,9 @@ const render = () => {
       {},
       el("h1", { textContent: "Bulls and Cows" }),
       body,
-      renderScores(scores),
+      ...(screen.kind === "game" && screen.game.status === "playing"
+        ? []
+        : [renderScores(scores)]),
     ),
   );
 
@@ -114,6 +116,8 @@ const render = () => {
       timerId = window.setInterval(() => current.tick(Date.now()), 250);
     }
     root.querySelector("input")?.focus();
+    const list = root.querySelector(".history");
+    if (list) list.scrollTop = list.scrollHeight;
   }
 };
 
