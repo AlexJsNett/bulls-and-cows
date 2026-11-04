@@ -1,0 +1,485 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fbf6ec;
+  --card: #fffdf8;
+  --text: #22291f;
+  --muted: #6f6b5d;
+  --accent: #eaa233;
+  --accent-text: #2a1c00;
+  --border: #e8dfcb;
+  --field: #f3ecdc;
+  --tile: #f0e8d4;
+  --bull: #2f8f5b;
+  --bull-bg: #e0f1e5;
+  --error: #c0392b;
+  --shadow: 0 1px 2px rgb(60 40 0 / 6%), 0 8px 24px rgb(60 40 0 / 6%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17150f;
+    --card: #211e15;
+    --text: #f3eedf;
+    --muted: #a49d86;
+    --accent: #f0b04a;
+    --accent-text: #2a1c00;
+    --border: #35301f;
+    --field: #19170f;
+    --tile: #302b1b;
+    --bull: #6fd39a;
+    --bull-bg: #1e3a2a;
+    --error: #ff8f80;
+    --shadow: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.45;
+}
+
+main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 32px 16px 56px;
+}
+
+h1 {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+select,
+input {
+  font: inherit;
+  color: var(--text);
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--field);
+  min-width: 0;
+}
+
+select {
+  min-width: 140px;
+}
+
+select:disabled,
+input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+input {
+  flex: 1;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+input::placeholder {
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+:is(select, input, button):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 9px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-text);
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    filter 0.15s ease;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+main > div > button {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 12px;
+}
+
+.hint {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.message {
+  min-height: 1.2em;
+  margin: 8px 0 0;
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+.result {
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--bull-bg);
+  color: var(--bull);
+  font-weight: 600;
+  text-align: center;
+}
+
+.result p {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.legend {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  max-width: 320px;
+  margin-inline: auto;
+}
+
+.key {
+  padding: 12px 0;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 0 var(--border);
+}
+
+.key:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.key-muted {
+  background: var(--field);
+}
+
+.key-go {
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 18%);
+}
+
+.history {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.history li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.num {
+  width: 1.2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tile {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--tile);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.clue {
+  margin-left: auto;
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+}
+
+.clue-text {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.clue-icons {
+  letter-spacing: 0.1em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px 4px;
+  border-top: 1px solid var(--border);
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: var(--field);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+/* Fluid layout: the app fills one screen; content defines the minimum height */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.6dvh, 16px);
+  min-height: 100dvh;
+  padding: clamp(8px, 2dvh, 24px) 16px;
+}
+
+main > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: clamp(8px, 1.6dvh, 16px);
+}
+
+main > div > button {
+  margin-bottom: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.3rem, 4dvh, 1.9rem);
+}
+
+section {
+  margin-bottom: 0;
+  padding: clamp(10px, 2dvh, 18px);
+}
+
+.settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+  flex: none;
+}
+
+.settings .field {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin-bottom: clamp(4px, 1dvh, 12px);
+}
+
+.settings select {
+  width: 100%;
+}
+
+.settings .hint {
+  grid-column: 1 / -1;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.history {
+  flex: 1 1 0;
+  min-height: 96px;
+  margin: 0 0 clamp(4px, 1dvh, 12px);
+  overflow-y: auto;
+  align-content: start;
+}
+
+.game > .result {
+  flex: none;
+  margin-bottom: 8px;
+}
+
+.keypad {
+  flex: none;
+  gap: clamp(6px, 1dvh, 8px);
+  width: 100%;
+}
+
+.key {
+  height: clamp(38px, 6.5dvh, 56px);
+  padding: 0;
+}
+
+.scores {
+  flex: 0 1 auto;
+  max-height: clamp(96px, 22dvh, 220px);
+  overflow-y: auto;
+}
+
+.scores table {
+  font-size: 0.9rem;
+}
+
+.settings.locked .hint {
+  display: none;
+}
+
+.message:empty {
+  display: none;
+}
+
+.status {
+  margin-bottom: 4px;
+}
+
+.legend {
+  margin-bottom: 8px;
+}
+
+.tile {
+  width: clamp(28px, 9vw, 36px);
+  height: clamp(32px, 5.5dvh, 40px);
+}
+
+.history li {
+  padding: 6px 10px;
+}
+
+.clue-text {
+  text-align: right;
+}
+
+input {
+  padding: 7px 12px;
+}
+
+.tiles {
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+
+.history li {
+  gap: 8px;
+}
+
+.keypad-hex {
+  grid-template-columns: repeat(6, 1fr);
+  max-width: 420px;
+}
+
+.keypad-hex .key {
+  font-size: 1.05rem;
+}
+
+.keypad-hex .key-go {
+  font-size: 0.8rem;
+}
